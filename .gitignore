@@ -1,0 +1,13 @@
+#executable
+*.exe
+*.out
+
+#objectFile
+*.o
+*.obj
+
+#vscode
+.vscode/
+
+#temporaty files
+*.log
