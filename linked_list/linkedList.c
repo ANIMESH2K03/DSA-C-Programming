@@ -8,7 +8,7 @@ learning DSA in c language.
 #include<stdlib.h>
 
 //defining function pointer length
-#define len 4
+#define len 6
 
 struct node
 {
@@ -18,7 +18,7 @@ struct node
 
 int value_input(){
   int element;
-  printf("Enter Element to Insert Begining : ");
+  printf("Enter Element : ");
   scanf("%d",&element);
   return element;
 }
@@ -32,12 +32,17 @@ void display(struct node **);
 void insert_begining(struct node **);
 void insert_end(struct node **);
 
+void insert_before(struct node **);
+void insert_after(struct node **);
+
 //array of function pointer
 void (*f_pointer[len])(struct node **) = {
   menu,
   display,
   insert_begining,
-  insert_end
+  insert_end,
+  insert_before,
+  insert_after
 };
 
 // main function
@@ -83,6 +88,9 @@ void menu(struct node **head){
 
         "\n2.Insert at Begining."
         "\n3.Insert at End."
+
+        "\n4.Insert Before an Element."
+        "\n5.Insert After an Element."
 
         "\n"
         );
@@ -132,4 +140,67 @@ void insert_end(struct node **head){
   }
   p-> next = newnode;
    
+}
+
+void insert_before(struct node **head){
+  if (!*head){
+    puts("Empty List!");
+    return;
+  }
+  
+  int key;
+  printf("Enter key:");
+  scanf("%d",&key);
+  int element=value_input();
+
+  struct node *p = *head;
+
+  struct node *newnode = malloc(sizeof(struct node));
+  newnode -> value = element;
+  if (p->value==key)
+  {
+    newnode->next=p;
+    *head = newnode;
+  }else{
+    while (p->next != NULL)
+    {
+      if (p->next->value==key)
+      {
+        newnode->next=p->next;
+        p->next = newnode;
+        return;
+      }
+      p=p->next;
+    }
+  }
+  puts("Not Found!");
+  free(newnode);
+  return;
+}
+void insert_after(struct node **head){
+  if (!*head){
+    puts("Empty list!");
+    return;
+  }
+  
+  int element = value_input();
+  int key;
+  printf("Enter key : ");
+  scanf("%d",&key);
+
+  struct node *p = *head;
+
+  while (p!=NULL)
+  {
+    if (p->value == key)
+    {
+      struct node *newnode = malloc(sizeof(struct node));
+      newnode->value=element;
+      newnode->next = p->next;
+      p->next = newnode;
+      return;
+    }
+    p=p->next;
+  }
+  puts("Not Found key!");
 }
