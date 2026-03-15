@@ -8,7 +8,7 @@ learning DSA in c language.
 #include<stdlib.h>
 
 //defining function pointer length
-#define len 6
+#define len 8
 
 struct node
 {
@@ -35,6 +35,9 @@ void insert_end(struct node **);
 void insert_before(struct node **);
 void insert_after(struct node **);
 
+void delete_beg(struct node **);
+void delete_end(struct node **);
+
 //array of function pointer
 void (*f_pointer[len])(struct node **) = {
   menu,
@@ -42,7 +45,9 @@ void (*f_pointer[len])(struct node **) = {
   insert_begining,
   insert_end,
   insert_before,
-  insert_after
+  insert_after,
+  delete_beg,
+  delete_end
 };
 
 // main function
@@ -91,6 +96,9 @@ void menu(struct node **head){
 
         "\n4.Insert Before an Element."
         "\n5.Insert After an Element."
+        
+        "\n6.Delete Begining."
+        "\n7.Delete End."
 
         "\n"
         );
@@ -203,4 +211,35 @@ void insert_after(struct node **head){
     p=p->next;
   }
   puts("Not Found key!");
+}
+
+void delete_beg(struct node **head){
+  if (!*head){
+    puts("Empty List");
+    return;
+  }
+  struct node*p = *head;
+
+  *head = p->next;
+  free(p);
+}
+void delete_end(struct node **head){
+  if (!*head){
+    puts("Empty list!");
+    return;
+  }
+  if ((*head)->next == NULL){
+    free(*head);
+    *head = NULL;
+    return;
+  }
+  
+  struct node *p = *head;
+  while (p->next->next != NULL){
+    p=p->next;
+  }
+
+  free(p->next);
+  p->next = NULL;
+  
 }
