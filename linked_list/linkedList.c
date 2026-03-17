@@ -8,7 +8,7 @@ learning DSA in c language.
 #include<stdlib.h>
 
 //defining function pointer length
-#define len 8
+#define len 10
 
 struct node
 {
@@ -38,6 +38,9 @@ void insert_after(struct node **);
 void delete_beg(struct node **);
 void delete_end(struct node **);
 
+void delete_any(struct node **);
+void delete_mid(struct node **);
+
 //array of function pointer
 void (*f_pointer[len])(struct node **) = {
   menu,
@@ -47,7 +50,9 @@ void (*f_pointer[len])(struct node **) = {
   insert_before,
   insert_after,
   delete_beg,
-  delete_end
+  delete_end,
+  delete_mid,
+  delete_any
 };
 
 // main function
@@ -100,7 +105,11 @@ void menu(struct node **head){
         "\n6.Delete Begining."
         "\n7.Delete End."
 
-        "\n"
+        "\n8.Delete Mid."
+        "\n9.Delete any."
+        
+        // "\n10.Reverse Display."
+        // "\n11.Physically Reverse List."
         );
 }
 
@@ -242,4 +251,65 @@ void delete_end(struct node **head){
   free(p->next);
   p->next = NULL;
   
+}
+
+void delete_any(struct node **head){
+
+  if (!*head){
+    puts("Empty List!");
+    return;
+  }
+  int element;
+  printf("Enter Node value to delete : ");
+  scanf("%d",&element);
+
+  struct node *forward = *head;
+  struct node *prev = NULL;
+  
+  while (forward!=NULL)
+  {
+    if (forward -> value == element)
+    {
+      if (prev == NULL)
+      {
+        *head = forward->next;
+      }else{
+        prev ->next = forward->next;
+      }
+      free(forward);
+      return;
+    }
+    prev = forward;
+    forward = forward->next;
+  }
+  puts("Not Found!");
+}
+void delete_mid(struct node **head)
+{
+    if(!*head)
+    {
+        puts("Empty list!");
+        return;
+    }
+
+    if((*head)->next == NULL)
+    {
+        free(*head);
+        *head = NULL;
+        return;
+    }
+
+    struct node *slow = *head;
+    struct node *fast = *head;
+    struct node *prev = NULL;
+
+    while(fast != NULL && fast->next != NULL)
+    {
+        prev = slow;
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    prev->next = slow->next;
+    free(slow);
 }
