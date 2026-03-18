@@ -8,7 +8,7 @@ learning DSA in c language.
 #include<stdlib.h>
 
 //defining function pointer length
-#define len 10
+#define len 12
 
 struct node
 {
@@ -41,6 +41,9 @@ void delete_end(struct node **);
 void delete_any(struct node **);
 void delete_mid(struct node **);
 
+void reverse_display(struct node **);
+void physically_reverse(struct node **);
+
 //array of function pointer
 void (*f_pointer[len])(struct node **) = {
   menu,
@@ -52,7 +55,9 @@ void (*f_pointer[len])(struct node **) = {
   delete_beg,
   delete_end,
   delete_mid,
-  delete_any
+  delete_any,
+  reverse_display,
+  physically_reverse
 };
 
 // main function
@@ -108,8 +113,8 @@ void menu(struct node **head){
         "\n8.Delete Mid."
         "\n9.Delete any."
         
-        // "\n10.Reverse Display."
-        // "\n11.Physically Reverse List."
+        "\n10.Reverse Display."
+        "\n11.Physically Reverse List."
         );
 }
 
@@ -312,4 +317,31 @@ void delete_mid(struct node **head)
 
     prev->next = slow->next;
     free(slow);
+}
+
+void reverse_display(struct node **head){
+  if (!*head){
+    return;
+  }
+
+  reverse_display(&(*head) -> next);
+  printf("%d -> ",(*head) -> value);
+}
+
+void physically_reverse(struct node **head)
+{
+    struct node *prev = NULL;
+    struct node *curr = *head;
+    struct node *next = NULL;
+
+    while(curr != NULL)
+    {
+        next = curr->next;   
+        curr->next = prev;   
+
+        prev = curr;         
+        curr = next;         
+    }
+
+    *head = prev;            
 }
