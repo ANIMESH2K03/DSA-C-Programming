@@ -119,8 +119,37 @@ void insert_end(struct node **head,struct node **tail){
   }
 }
 
-void delete_first(struct node **head,struct node **tail){return;}
-void delete_last(struct node **head,struct node **tail){return;}
+void delete_first(struct node **head,struct node **tail){
+  if (!*head){
+    printf("Empty List!");
+    return;
+  }
+  struct node *p = *head;
+
+  if (*head == *tail){
+    *head = *tail = NULL;
+  }else{
+    *head = p->next;
+    (*head)->prev = NULL;
+  }
+  free(p);
+}
+
+void delete_last(struct node **head,struct node **tail){
+  if (!*head){
+    printf("Empty List");
+    return;
+  }
+  struct node *p = *tail;
+
+  if (*head == *tail){
+    *head = *tail = NULL;
+  }else{
+    *tail = p->prev;
+    (*tail)->next = NULL;
+  }
+  free(p);
+}
 
 void display(struct node **head,struct node **tail){
   (void)*tail;
