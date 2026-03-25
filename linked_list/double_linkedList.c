@@ -2,6 +2,8 @@
 /*
 1.insert beg, intert end, delete first, delete last.
 2.insert any,delete any.
+
+Time complexity O(1)
 */
 
 #include<stdio.h>
