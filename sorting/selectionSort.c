@@ -1,3 +1,8 @@
+//Selection sort using c programming
+/*
+Time complexity : O(n^2)
+*/
+
 #include<stdio.h>
 
 void display(int *,int);
