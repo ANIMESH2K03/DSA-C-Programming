@@ -15,6 +15,8 @@ int main(){
   int len = sizeof(arr)/sizeof(arr[0]);
 
   bubble_sort(arr,len);
+  display(arr,len);
+
 }
 
 void swap(int *x,int *y){
@@ -35,7 +37,6 @@ void bubble_sort(int *arr,int len){
         swap(&arr[j],&arr[j+1]);
       }
     } 
-    display(arr,len);
   }
 }
 
